@@ -1,6 +1,6 @@
 # ReciclApp
 Vision:
-      ReciApp estara destinada a la sustentabilidad y la bonificacion de usuarios que interactuen con ella, el formato principal es el canje de los deternimados Reci-Creditos, que es la moneda de la app. Con dicha moneda
+      ReciclApp estara destinada a la sustentabilidad y la bonificacion de usuarios que interactuen con ella, el formato principal es el canje de los deternimados Reci-Creditos, que es la moneda de la app. Con dicha moneda
       los usuarios podran intercambiar y acceder a distintos beneficios que se los otorgaran los centros de cambios o RECI-DROPS, que son los puntos verde en el mapa donde se deben entregar el conjunto de botellas (PET)
       donde el recepcionador a travez de un QR unico generado por la app le acreditara automaticamente la cantidad de Resi-Creditos que la App previamente contabilizo a travez de una foto.
 

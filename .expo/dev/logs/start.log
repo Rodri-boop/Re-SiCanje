@@ -363,3 +363,178 @@
 {"_e":"metro:bundling:progress","_t":1791247179286,"id":"1","progress":0.999,"total":786,"current":786}
 {"_e":"metro:bundling:done","_t":1791247179470,"id":"1","total":786,"ms":3288.2273}
 {"_e":"metro:client_log","_t":1791247180387,"level":"warn","data":["SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context"]}
+{"_e":"root:init","_t":1791252678319,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1791252678321,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791252678331,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_SUPABASE_ANON_KEY":"sb_publishable_yNbRRIyIDVP3pOAbr7RFMQ_zkHfbNjD","EXPO_PUBLIC_SUPABASE_URL":"https://bchbbvghkctjpzhjqioe.supabase.co"}}
+{"_e":"devserver:start","_t":1791252679916,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791252681274,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791252682035,"plugins":[]}
+{"_e":"metro:instantiate","_t":1791252697085,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"root:init","_t":1791253033667,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1791253033669,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791253033678,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_SUPABASE_ANON_KEY":"sb_publishable_yNbRRIyIDVP3pOAbr7RFMQ_zkHfbNjD","EXPO_PUBLIC_SUPABASE_URL":"https://bchbbvghkctjpzhjqioe.supabase.co"}}
+{"_e":"devserver:start","_t":1791253035147,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791253036524,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791253037446,"plugins":[]}
+{"_e":"metro:instantiate","_t":1791253053413,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791253068658,"id":"1","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791253068660,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791253068684,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791253070833,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1791253070934,"id":"1","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1791253070943,"id":"1","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1791253071042,"id":"1","progress":0.07335069444444443,"total":48,"current":13}
+{"_e":"metro:bundling:progress","_t":1791253071144,"id":"1","progress":0.08884985207100592,"total":208,"current":62}
+{"_e":"metro:bundling:progress","_t":1791253071244,"id":"1","progress":0.14540719768656601,"total":257,"current":98}
+{"_e":"metro:bundling:progress","_t":1791253071345,"id":"1","progress":0.28090000000000004,"total":300,"current":159}
+{"_e":"metro:bundling:progress","_t":1791253071446,"id":"1","progress":0.3651718167789529,"total":326,"current":197}
+{"_e":"metro:bundling:progress","_t":1791253071546,"id":"1","progress":0.37999624695064743,"total":365,"current":225}
+{"_e":"metro:bundling:progress","_t":1791253071646,"id":"1","progress":0.43141012396694217,"total":440,"current":289}
+{"_e":"metro:bundling:progress","_t":1791253071749,"id":"1","progress":0.45271300106691054,"total":486,"current":327}
+{"_e":"metro:bundling:progress","_t":1791253071849,"id":"1","progress":0.5771287783186106,"total":516,"current":392}
+{"_e":"metro:bundling:progress","_t":1791253071949,"id":"1","progress":0.6422515373995015,"total":569,"current":456}
+{"_e":"metro:bundling:progress","_t":1791253072051,"id":"1","progress":0.7319135815483219,"total":616,"current":527}
+{"_e":"metro:bundling:progress","_t":1791253072150,"id":"1","progress":0.7467362468148614,"total":633,"current":547}
+{"_e":"metro:bundling:progress","_t":1791253072250,"id":"1","progress":0.8266922654478458,"total":672,"current":611}
+{"_e":"metro:bundling:progress","_t":1791253072351,"id":"1","progress":0.8266922654478458,"total":683,"current":619}
+{"_e":"metro:bundling:progress","_t":1791253072451,"id":"1","progress":0.8697422468776548,"total":727,"current":678}
+{"_e":"metro:bundling:progress","_t":1791253072576,"id":"1","progress":0.9353274535560143,"total":730,"current":706}
+{"_e":"metro:bundling:progress","_t":1791253072676,"id":"1","progress":0.9611184589238234,"total":764,"current":749}
+{"_e":"metro:bundling:progress","_t":1791253072784,"id":"1","progress":0.9921824404011208,"total":766,"current":763}
+{"_e":"metro:bundling:progress","_t":1791253073489,"id":"1","progress":0.9947848850288705,"total":766,"current":764}
+{"_e":"metro:bundling:progress","_t":1791253073605,"id":"1","progress":0.9947848850288705,"total":774,"current":766}
+{"_e":"metro:bundling:progress","_t":1791253073736,"id":"1","progress":0.9947848850288705,"total":774,"current":767}
+{"_e":"metro:bundling:progress","_t":1791253073847,"id":"1","progress":0.9947848850288705,"total":778,"current":769}
+{"_e":"metro:bundling:progress","_t":1791253073961,"id":"1","progress":0.9947848850288705,"total":779,"current":775}
+{"_e":"metro:bundling:progress","_t":1791253074064,"id":"1","progress":0.9948718033224517,"total":779,"current":777}
+{"_e":"metro:bundling:progress","_t":1791253076170,"id":"1","progress":0.9974342537831162,"total":779,"current":778}
+{"_e":"metro:bundling:progress","_t":1791253076272,"id":"1","progress":0.999,"total":786,"current":786}
+{"_e":"metro:bundling:done","_t":1791253076516,"id":"1","total":786,"ms":7857.4901}
+{"_e":"metro:client_log","_t":1791253077555,"level":"warn","data":["SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context"]}
+{"_e":"metro:client_log","_t":1791253262742,"level":"error","data":["[Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.\n\nCheck the render method of `AppNavigator`.]"]}
+{"_e":"root:init","_t":1791860389259,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1791860389285,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791860389319,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_SUPABASE_ANON_KEY":"sb_publishable_yNbRRIyIDVP3pOAbr7RFMQ_zkHfbNjD","EXPO_PUBLIC_SUPABASE_URL":"https://bchbbvghkctjpzhjqioe.supabase.co"}}
+{"_e":"devserver:start","_t":1791860397717,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791860407090,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791860411547,"plugins":[]}
+{"_e":"metro:instantiate","_t":1791860424220,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791860434294,"id":"1","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791860434295,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791860434301,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791860434403,"id":"1","progress":0.0625,"total":52,"current":13}
+{"_e":"metro:bundling:progress","_t":1791860434572,"id":"1","progress":0.0625,"total":151,"current":14}
+{"_e":"metro:bundling:progress","_t":1791860434753,"id":"1","progress":0.0625,"total":151,"current":15}
+{"_e":"metro:bundling:progress","_t":1791860434853,"id":"1","progress":0.06588692842231693,"total":187,"current":48}
+{"_e":"metro:bundling:progress","_t":1791860434954,"id":"1","progress":0.1187063060518325,"total":238,"current":82}
+{"_e":"metro:bundling:progress","_t":1791860435059,"id":"1","progress":0.24154037903761252,"total":293,"current":144}
+{"_e":"metro:bundling:progress","_t":1791860435171,"id":"1","progress":0.24490675488357463,"total":293,"current":145}
+{"_e":"metro:bundling:progress","_t":1791860435273,"id":"1","progress":0.34602076124567477,"total":323,"current":190}
+{"_e":"metro:bundling:progress","_t":1791860435373,"id":"1","progress":0.3865023375605387,"total":378,"current":235}
+{"_e":"metro:bundling:progress","_t":1791860435475,"id":"1","progress":0.42968338636935965,"total":418,"current":274}
+{"_e":"metro:bundling:progress","_t":1791860435578,"id":"1","progress":0.42968338636935965,"total":445,"current":290}
+{"_e":"metro:bundling:progress","_t":1791860435715,"id":"1","progress":0.42968338636935965,"total":445,"current":291}
+{"_e":"metro:bundling:progress","_t":1791860435820,"id":"1","progress":0.42968338636935965,"total":471,"current":305}
+{"_e":"metro:bundling:progress","_t":1791860435899,"id":"1","progress":0.42968338636935965,"total":471,"current":306}
+{"_e":"metro:bundling:progress","_t":1791860435999,"id":"1","progress":0.4753456115722656,"total":512,"current":353}
+{"_e":"metro:bundling:progress","_t":1791860436099,"id":"1","progress":0.6251340728447901,"total":535,"current":423}
+{"_e":"metro:bundling:progress","_t":1791860436199,"id":"1","progress":0.6251340728447901,"total":594,"current":467}
+{"_e":"metro:bundling:progress","_t":1791860436302,"id":"1","progress":0.6251340728447901,"total":598,"current":469}
+{"_e":"metro:bundling:progress","_t":1791860436362,"id":"1","progress":0.6251340728447901,"total":598,"current":470}
+{"_e":"metro:bundling:progress","_t":1791860436465,"id":"1","progress":0.7147448974514623,"total":634,"current":536}
+{"_e":"metro:bundling:progress","_t":1791860436566,"id":"1","progress":0.7785467128027681,"total":663,"current":585}
+{"_e":"metro:bundling:progress","_t":1791860436668,"id":"1","progress":0.7951135433084733,"total":674,"current":601}
+{"_e":"metro:bundling:progress","_t":1791860436768,"id":"1","progress":0.8313911725605968,"total":703,"current":641}
+{"_e":"metro:bundling:progress","_t":1791860436871,"id":"1","progress":0.8634850918269309,"total":749,"current":696}
+{"_e":"metro:bundling:progress","_t":1791860436971,"id":"1","progress":0.925332906221368,"total":762,"current":733}
+{"_e":"metro:bundling:progress","_t":1791860437072,"id":"1","progress":0.9822451215059435,"total":785,"current":778}
+{"_e":"metro:bundling:progress","_t":1791860437172,"id":"1","progress":0.999,"total":786,"current":786}
+{"_e":"metro:bundling:done","_t":1791860437387,"id":"1","total":786,"ms":3092.1758}
+{"_e":"metro:client_log","_t":1791860439362,"level":"warn","data":["SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context"]}
+{"_e":"metro:client_log","_t":1791860464853,"level":"warn","data":["[AuthRetryableFetchError: fetch failed: UnexpectedException: A server with the specified hostname could not be found. (at ExpoModulesCore/Promise.swift:56)]"]}
+{"_e":"metro:client_log","_t":1791860464928,"level":"warn","data":["[AuthRetryableFetchError: fetch failed: UnexpectedException: A server with the specified hostname could not be found. (at ExpoModulesCore/Promise.swift:56)]"]}
+{"_e":"root:init","_t":1791860890513,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1791860890515,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791860890520,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_SUPABASE_ANON_KEY":"sb_publishable_yNbRRIyIDVP3pOAbr7RFMQ_zkHfbNjD","EXPO_PUBLIC_SUPABASE_URL":"https://bchbbvghkctjpzhjqioe.supabase.co"}}
+{"_e":"devserver:start","_t":1791860891287,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791860891977,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791860892381,"plugins":[]}
+{"_e":"metro:instantiate","_t":1791860901741,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791861190812,"id":"4","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791861190813,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791861190923,"id":"4","total":1,"ms":110.5971}
+{"_e":"metro:client_log","_t":1791861192748,"level":"warn","data":["SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context"]}
+{"_e":"metro:client_log","_t":1791861240078,"level":"error","data":["[Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.\n\nCheck the render method of `AppNavigator`.]"]}
+{"_e":"root:init","_t":1791861418204,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1791861418206,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791861418211,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_SUPABASE_ANON_KEY":"sb_publishable_yNbRRIyIDVP3pOAbr7RFMQ_zkHfbNjD","EXPO_PUBLIC_SUPABASE_URL":"https://bchbbvghkctjpzhjqioe.supabase.co"}}
+{"_e":"devserver:start","_t":1791861418841,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791861419517,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791861420025,"plugins":[]}
+{"_e":"metro:instantiate","_t":1791861428688,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791861439352,"id":"1","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791861439352,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791861439357,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791861439457,"id":"1","progress":0.03555918367346939,"total":175,"current":33}
+{"_e":"metro:bundling:progress","_t":1791861439557,"id":"1","progress":0.20215131302205397,"total":258,"current":116}
+{"_e":"metro:bundling:progress","_t":1791861439657,"id":"1","progress":0.34080350620891164,"total":370,"current":216}
+{"_e":"metro:bundling:progress","_t":1791861439757,"id":"1","progress":0.4548404542996214,"total":473,"current":319}
+{"_e":"metro:bundling:progress","_t":1791861439857,"id":"1","progress":0.6624491209226073,"total":532,"current":433}
+{"_e":"metro:bundling:progress","_t":1791861439957,"id":"1","progress":0.7004659455538607,"total":601,"current":503}
+{"_e":"metro:bundling:progress","_t":1791861440087,"id":"1","progress":0.7570906223290009,"total":639,"current":556}
+{"_e":"metro:bundling:progress","_t":1791861440334,"id":"1","progress":0.7570906223290009,"total":704,"current":606}
+{"_e":"metro:bundling:progress","_t":1791861440337,"id":"1","progress":0.7570906223290009,"total":704,"current":607}
+{"_e":"metro:bundling:progress","_t":1791861440441,"id":"1","progress":0.8891939716736205,"total":754,"current":711}
+{"_e":"metro:bundling:progress","_t":1791861440541,"id":"1","progress":0.899486646510456,"total":756,"current":717}
+{"_e":"metro:bundling:progress","_t":1791861440643,"id":"1","progress":0.9974570893952049,"total":786,"current":785}
+{"_e":"metro:bundling:progress","_t":1791861447233,"id":"1","progress":0.999,"total":786,"current":786}
+{"_e":"metro:bundling:done","_t":1791861447372,"id":"1","total":786,"ms":8020.4219}
+{"_e":"metro:client_log","_t":1791861449495,"level":"warn","data":["SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context"]}
+{"_e":"metro:server_log","_t":1791861600660,"level":"info","data":["Launching DevTools..."]}
+{"_e":"metro:bundling:started","_t":1791861603800,"id":"2","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"root:init","_t":1791861998588,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1791861998589,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791861998595,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_SUPABASE_ANON_KEY":"sb_publishable_yNbRRIyIDVP3pOAbr7RFMQ_zkHfbNjD","EXPO_PUBLIC_SUPABASE_URL":"https://bchbbvghkctjpzhjqioe.supabase.co"}}
+{"_e":"devserver:start","_t":1791861999285,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791861999974,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791862000406,"plugins":[]}
+{"_e":"metro:instantiate","_t":1791862009492,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791862011047,"id":"1","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791862011048,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791862011054,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791862011154,"id":"1","progress":0.03188775510204082,"total":168,"current":30}
+{"_e":"metro:bundling:progress","_t":1791862011254,"id":"1","progress":0.161844365173735,"total":261,"current":105}
+{"_e":"metro:bundling:progress","_t":1791862011356,"id":"1","progress":0.3509085749176564,"total":341,"current":202}
+{"_e":"metro:bundling:progress","_t":1791862011482,"id":"1","progress":0.37631523197514305,"total":476,"current":292}
+{"_e":"metro:bundling:progress","_t":1791862011582,"id":"1","progress":0.44268601117537504,"total":505,"current":336}
+{"_e":"metro:bundling:progress","_t":1791862011682,"id":"1","progress":0.6723999999999999,"total":550,"current":451}
+{"_e":"metro:bundling:progress","_t":1791862011782,"id":"1","progress":0.787177985143382,"total":603,"current":535}
+{"_e":"metro:bundling:progress","_t":1791862011882,"id":"1","progress":0.806952025280092,"total":708,"current":636}
+{"_e":"metro:bundling:progress","_t":1791862011982,"id":"1","progress":0.9189359733761614,"total":749,"current":718}
+{"_e":"metro:bundling:progress","_t":1791862012091,"id":"1","progress":0.9974342537831162,"total":779,"current":778}
+{"_e":"metro:bundling:progress","_t":1791862012481,"id":"1","progress":0.999,"total":779,"current":779}
+{"_e":"metro:bundling:done","_t":1791862012616,"id":"1","total":779,"ms":1568.098}
+{"_e":"metro:bundling:started","_t":1791862050388,"id":"2","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791862050389,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791862050462,"id":"2","total":1,"ms":73.3723}
+{"_e":"metro:client_log","_t":1791862052224,"level":"warn","data":["SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context"]}
+{"_e":"metro:bundling:started","_t":1791862060560,"id":"3","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791862060560,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791862060621,"id":"3","total":1,"ms":60.9867}
+{"_e":"metro:client_log","_t":1791862062191,"level":"warn","data":["SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context"]}
+{"_e":"metro:bundling:started","_t":1791862124572,"id":"4","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791862124572,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791862124642,"id":"4","total":1,"ms":69.6624}
+{"_e":"metro:client_log","_t":1791862126270,"level":"warn","data":["SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context"]}
+{"_e":"metro:server_log","_t":1791862178350,"level":"info","data":["Launching DevTools..."]}
+{"_e":"metro:bundling:started","_t":1791862179747,"id":"5","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:started","_t":1791862248149,"id":"6","platform":"ios","environment":null,"entry":"src\\screens\\ScanScreen.js"}
+{"_e":"metro:bundling:started","_t":1791862252936,"id":"7","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791862252937,"id":"7","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791862253016,"id":"7","total":1,"ms":79.0838}
+{"_e":"metro:client_log","_t":1791862254682,"level":"warn","data":["SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context"]}
+{"_e":"metro:bundling:started","_t":1791862563540,"id":"8","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791862563541,"id":"8","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791862563600,"id":"8","total":1,"ms":59.8772}
+{"_e":"metro:client_log","_t":1791862565132,"level":"warn","data":["SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context"]}
+{"_e":"metro:server_log","_t":1791862798552,"level":"error","data":["[timeout] connection terminated with Device for app='%s' on device='%s' after not responding for %s seconds.","host.exp.Exponent","iPhone","60"]}

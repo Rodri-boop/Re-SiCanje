@@ -1,63 +1,71 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React from 'react';
+import { ScrollView, Text, View, StyleSheet } from 'react-native';
+import { useWallet } from '../context/WalletContext';
+import Button from '../components/Button';
+import Card from '../components/Card';
+import { colors } from '../theme/colors';
 
-const WalletContext = createContext(null);
-
-const PUNTOS_POR_BOTELLA = 50;
-const KG_POR_BOTELLA = 0.05;
-
-export function WalletProvider({ children }) {
-  const [balance, setBalance] = useState(2450);
-  const [recycledKg, setRecycledKg] = useState(15.4);
-  const [ultimoCodigo, setUltimoCodigo] = useState(null);
-  const [movimientos, setMovimientos] = useState([
-    { id: '1', texto: '+ 12 Botellas PET depositadas', monto: '+$600 ARS', tipo: 'green' },
-    { id: '2', texto: '+ 8 Latas de Aluminio', monto: '+$400 ARS', tipo: 'green' },
-    { id: '3', texto: '- Retiro enviado a Mercado Pago', monto: '-$1.000 ARS', tipo: 'blue' },
-  ]);
-
-  const addMovimiento = (mov) =>
-    setMovimientos((prev) => [{ id: Date.now().toString(), ...mov }, ...prev]);
-
-  const registerScan = useCallback((codigo) => {
-    setUltimoCodigo(codigo);
-    setBalance((p) => p + PUNTOS_POR_BOTELLA);
-    setRecycledKg((p) => +(p + KG_POR_BOTELLA).toFixed(2));
-    addMovimiento({
-      texto: '+ 1 Envase escaneado',
-      monto: `+$${PUNTOS_POR_BOTELLA} ARS`,
-      tipo: 'green',
-    });
-    return PUNTOS_POR_BOTELLA;
-  }, []);
-
-  const withdraw = useCallback(({ cvu, titular, monto }) => {
-    if (!cvu.trim() || !titular.trim()) {
-      return { ok: false, title: 'Error', message: 'Ingresá el CVU/Alias y el Titular de Mercado Pago.' };
-    }
-    const montoNum = parseInt(monto, 10) || 0;
-    if (montoNum <= 0) return { ok: false, title: 'Error', message: 'Ingresá un monto válido mayor a 0.' };
-    if (montoNum > balance) {
-      return { ok: false, title: 'Saldo insuficiente', message: 'El monto supera tu saldo disponible.' };
-    }
-    setBalance((p) => p - montoNum);
-    addMovimiento({
-      texto: `- Retiro enviado a ${titular}`,
-      monto: `-$${montoNum.toLocaleString()} ARS`,
-      tipo: 'blue',
-    });
-    return { ok: true, monto: montoNum };
-  }, [balance]);
+export default function WalletScreen({ navigate }) {
+  const { balance, recycledKg, movimientos } = useWallet();
 
   return (
-    <WalletContext.Provider
-      value={{
-        balance, recycledKg, movimientos, ultimoCodigo,
-        puntosPorBotella: PUNTOS_POR_BOTELLA, registerScan, withdraw,
-      }}
-    >
-      {children}
-    </WalletContext.Provider>
+    <ScrollView contentContainerStyle={styles.scroll}>
+      <Text style={styles.title}>Mi Billetera</Text>
+
+      <Card
+        backgroundColor={colors.primary}
+        label="Balance de Puntos Ecológicos"
+        value={`${balance.toLocaleString()} PTS`}
+        sub={`≈ $${balance.toLocaleString()} ARS canjeables`}
+      />
+
+      <Card
+        backgroundColor={colors.green}
+        label="Impacto Positivo"
+        value={`${recycledKg} Kg`}
+        sub="Plástico PET reciclado acumulado"
+      />
+
+      <Button
+        variant="mp"
+        title="Retirar con Mercado Pago"
+        onPress={() => navigate('mp_transfer')}
+      />
+
+      <Text style={styles.sectionTitle}>Movimientos recientes</Text>
+      {movimientos.map((movimiento) => (
+        <View key={movimiento.id} style={styles.movement}>
+          <Text style={styles.movementText}>{movimiento.texto}</Text>
+          <Text
+            style={[
+              styles.movementAmount,
+              movimiento.tipo === 'blue' && styles.withdrawal,
+            ]}
+          >
+            {movimiento.monto}
+          </Text>
+        </View>
+      ))}
+    </ScrollView>
   );
 }
 
-export const useWallet = () => useContext(WalletContext);
+const styles = StyleSheet.create({
+  scroll: { padding: 20, paddingBottom: 90 },
+  title: { fontSize: 20, fontWeight: 'bold', color: colors.dark, marginBottom: 15 },
+  sectionTitle: { fontSize: 16, fontWeight: 'bold', color: colors.dark, marginTop: 12, marginBottom: 10 },
+  movement: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 8,
+  },
+  movementText: { flex: 1, color: colors.slate700, fontSize: 13, marginRight: 8 },
+  movementAmount: { color: colors.green, fontSize: 13, fontWeight: 'bold' },
+  withdrawal: { color: colors.primary },
+});

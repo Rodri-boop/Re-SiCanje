@@ -1,0 +1,1 @@
+export const formatARS = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');

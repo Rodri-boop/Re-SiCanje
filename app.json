@@ -23,8 +23,11 @@
     "plugins": [
       [
         "expo-camera",
-        { "cameraPermission": "RECICANJE necesita la cámara para escanear tus envases." }
-      ]
+        {
+          "cameraPermission": "RECICANJE necesita la cámara para escanear tus envases."
+        }
+      ],
+      "expo-status-bar"
     ]
   }
 }

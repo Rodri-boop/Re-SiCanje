@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import BottomNav from '../components/BottomNav';
+import { colors } from '../theme/colors';
 
-import AuthScreen from '../screens/AuthScreen';
+import AuthNavigator from './AuthNavigator';
+import RegisterSuccess from '../screens/RegisterSuccess';
 import HomeScreen from '../screens/HomeScreen';
 import ScanScreen from '../screens/ScanScreen';
 import ScanResultScreen from '../screens/ScanResultScreen';
 import MapScreen from '../screens/MapScreen';
+import DropDetailScreen from '../screens/DropDetailScreen';
 import WalletScreen from '../screens/WalletScreen';
 import MPTransferScreen from '../screens/MPTransferScreen';
 
@@ -16,40 +19,38 @@ const SCREENS = {
   scan: ScanScreen,
   scan_result: ScanResultScreen,
   map: MapScreen,
+  drop_detail: DropDetailScreen,
   wallet: WalletScreen,
   mp_transfer: MPTransferScreen,
 };
 
-const SCREENS_WITHOUT_NAV = ['scan'];
+// Qué pestaña de la barra inferior se ilumina en cada pantalla
+const TAB = { home: 'home', scan: 'scan', scan_result: 'scan', map: 'map', drop_detail: 'map', wallet: 'wallet', mp_transfer: 'wallet' };
 
 export default function AppNavigator() {
-  const { usuarioActivo, cargando } = useAuth();
-  const [screen, setScreen] = useState('home');
+  const { usuarioActivo, cargando, registroInfo } = useAuth();
+  const [route, setRoute] = useState({ name: 'home' });
+  const navigate = (name, params) => setRoute({ name, params });
 
   useEffect(() => {
-    if (!usuarioActivo) setScreen('home');
+    if (!usuarioActivo) setRoute({ name: 'home' });
   }, [usuarioActivo]);
 
   if (cargando) {
     return (
-      <View style={[styles.container, styles.center]}>
-        <ActivityIndicator size="large" color="#00C06D" />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.bg }}>
+        <ActivityIndicator size="large" color={colors.green} />
       </View>
     );
   }
+  if (registroInfo) return <RegisterSuccess />;
+  if (!usuarioActivo) return <AuthNavigator />;
 
-  if (!usuarioActivo) return <AuthScreen />;
-
-  const Screen = SCREENS[screen];
+  const Screen = SCREENS[route.name];
   return (
-    <View style={styles.container}>
-      <Screen navigate={setScreen} />
-      {!SCREENS_WITHOUT_NAV.includes(screen) && <BottomNav current={screen} onNavigate={setScreen} />}
+    <View style={{ flex: 1 }}>
+      <Screen navigate={navigate} params={route.params} />
+      {route.name !== 'scan' && <BottomNav current={TAB[route.name]} onNavigate={navigate} />}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  center: { justifyContent: 'center', alignItems: 'center' },
-});

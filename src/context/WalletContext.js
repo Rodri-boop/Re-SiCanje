@@ -2,30 +2,31 @@ import React, { createContext, useContext, useState, useCallback } from 'react';
 
 const WalletContext = createContext(null);
 
-const PUNTOS_POR_BOTELLA = 50;
-const KG_POR_BOTELLA = 0.05;
+const VALOR_POR_BOTELLA = 15;
+
+const hora = () => {
+  const d = new Date();
+  return `Hoy, ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+};
 
 export function WalletProvider({ children }) {
   const [balance, setBalance] = useState(2450);
-  const [recycledKg, setRecycledKg] = useState(15.4);
+  const [botellas, setBotellas] = useState(142);
+  const [ultimoEscaneo, setUltimoEscaneo] = useState(null);
   const [movimientos, setMovimientos] = useState([
-    { id: '1', texto: '+ 12 Botellas PET depositadas', monto: '+$600 ARS', tipo: 'green' },
-    { id: '2', texto: '+ 8 Latas de Aluminio', monto: '+$400 ARS', tipo: 'green' },
-    { id: '3', texto: '- Retiro enviado a Mercado Pago', monto: '-$1.000 ARS', tipo: 'blue' },
+    { id: '1', titulo: 'Canje en Punto Verde', detalle: 'Hoy, 10:24 • 12 botellas', monto: 180, icono: 'arrow-down-left' },
+    { id: '2', titulo: 'Descuento en café', detalle: 'Ayer, 18:15 • Canjeado', monto: -500, icono: 'shopping-bag' },
+    { id: '3', titulo: 'Canje en Supermercado', detalle: '14/01, 14:02 • 8 botellas', monto: 120, icono: 'arrow-down-left' },
   ]);
 
-  const addMovimiento = (mov) =>
-    setMovimientos((prev) => [{ id: Date.now().toString(), ...mov }, ...prev]);
+  const addMovimiento = (m) => setMovimientos((p) => [{ id: Date.now().toString(), ...m }, ...p]);
 
-  const registerScan = useCallback(() => {
-    setBalance((p) => p + PUNTOS_POR_BOTELLA);
-    setRecycledKg((p) => +(p + KG_POR_BOTELLA).toFixed(2));
-    addMovimiento({
-      texto: '+ 1 Botella PET depositada',
-      monto: `+$${PUNTOS_POR_BOTELLA} ARS`,
-      tipo: 'green',
-    });
-    return PUNTOS_POR_BOTELLA;
+  // TODO: estos valores (material, peso, confianza) son de relleno hasta conectar el modelo de visión
+  const registerScan = useCallback((codigo) => {
+    setUltimoEscaneo({ codigo, material: 'PET 1 (polietileno)', peso: '~45 gramos', confianza: '98,4 %', valor: VALOR_POR_BOTELLA });
+    setBalance((p) => p + VALOR_POR_BOTELLA);
+    setBotellas((p) => p + 1);
+    addMovimiento({ titulo: 'Canje por escaneo', detalle: `${hora()} • 1 botella`, monto: VALOR_POR_BOTELLA, icono: 'arrow-down-left' });
   }, []);
 
   const withdraw = useCallback(({ cvu, titular, monto }) => {
@@ -34,22 +35,14 @@ export function WalletProvider({ children }) {
     }
     const montoNum = parseInt(monto, 10) || 0;
     if (montoNum <= 0) return { ok: false, title: 'Error', message: 'Ingresá un monto válido mayor a 0.' };
-    if (montoNum > balance) {
-      return { ok: false, title: 'Saldo insuficiente', message: 'El monto supera tu saldo disponible.' };
-    }
+    if (montoNum > balance) return { ok: false, title: 'Saldo insuficiente', message: 'El monto supera tu saldo disponible.' };
     setBalance((p) => p - montoNum);
-    addMovimiento({
-      texto: `- Retiro enviado a ${titular}`,
-      monto: `-$${montoNum.toLocaleString()} ARS`,
-      tipo: 'blue',
-    });
+    addMovimiento({ titulo: `Retiro a ${titular}`, detalle: `${hora()} • Mercado Pago`, monto: -montoNum, icono: 'arrow-up-right' });
     return { ok: true, monto: montoNum };
   }, [balance]);
 
   return (
-    <WalletContext.Provider
-      value={{ balance, recycledKg, movimientos, puntosPorBotella: PUNTOS_POR_BOTELLA, registerScan, withdraw }}
-    >
+    <WalletContext.Provider value={{ balance, botellas, ultimoEscaneo, movimientos, registerScan, withdraw }}>
       {children}
     </WalletContext.Provider>
   );

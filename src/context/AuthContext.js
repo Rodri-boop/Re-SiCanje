@@ -25,7 +25,8 @@ const toUsuario = (user) =>
 
 export function AuthProvider({ children }) {
   const [usuarioActivo, setUsuarioActivo] = useState(null);
-  const [cargando, setCargando] = useState(true); // restaurando sesión guardada
+  const [cargando, setCargando] = useState(true);
+  const [registroInfo, setRegistroInfo] = useState(null); // restaurando sesión guardada
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -40,29 +41,24 @@ export function AuthProvider({ children }) {
     return () => listener.subscription.unsubscribe();
   }, []);
 
-  const register = useCallback(async ({ nombre, email, password, confirm }) => {
-    if (![nombre, email, password, confirm].every((v) => v.trim())) {
-      return fail('Datos incompletos', 'Completá todos los campos para continuar.');
-    }
-    if (password !== confirm) return fail('Error', 'Las contraseñas no coinciden.');
-    if (password.length < 6) return fail('Contraseña débil', 'Usá al menos 6 caracteres.');
-
-    const { data, error } = await supabase.auth.signUp({
-      email: email.trim().toLowerCase(),
-      password,
-      options: { data: { nombre: nombre.trim() } }, // queda en user_metadata
-    });
-
-    if (error) return fail('Error al registrarse', traducirError(error));
-
-    // Con "Confirm email" activo, un email ya existente devuelve identities vacío
-    if (data.user?.identities?.length === 0) {
-      return fail('Usuario existente', 'Ya existe una cuenta registrada con este correo.');
-    }
-
-    // Sin sesión = Supabase está esperando que confirme el correo
-    return { ok: true, nombre: nombre.trim(), needsConfirmation: !data.session };
+  const register = useCallback(async ({ nombre, email, password, cuil, username, region, idioma }) => {
+  if (![nombre, email, password].every((v) => v?.trim())) {
+    return fail('Datos incompletos', 'Completá todos los campos para continuar.');
+  }
+  const { data, error } = await supabase.auth.signUp({
+    email: email.trim().toLowerCase(),
+    password,
+    options: { data: { nombre: nombre.trim(), cuil, username: username.trim().toLowerCase(), region, idioma } },
+  });
+  if (error) return fail('Error al registrarse', traducirError(error));
+  if (data.user?.identities?.length === 0) {
+    return fail('Usuario existente', 'Ya existe una cuenta registrada con este correo.');
+  }
+  setRegistroInfo({ nombre: nombre.trim(), username: username.trim().toLowerCase(), needsConfirmation: !data.session });
+  return { ok: true };
   }, []);
+
+  const finalizarRegistro = useCallback(() => setRegistroInfo(null), []);
 
   const login = useCallback(async ({ email, password }) => {
     if (!email.trim() || !password.trim()) {
@@ -86,7 +82,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ usuarioActivo, cargando, register, login, loginWithGoogle, logout }}>
+    <AuthContext.Provider value={{ usuarioActivo, cargando, registroInfo, register, login, loginWithGoogle, logout, finalizarRegistro }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,37 +1,73 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useWallet } from '../context/WalletContext';
+import Screen from '../components/Screen';
+import Header from '../components/Header';
+import Card from '../components/Card';
 import Button from '../components/Button';
-import LinkButton from '../components/LinkButton';
+import SettingsSection from '../components/SettingsSection';
 import { colors } from '../theme/colors';
 
+const POR_DEFECTO = { material: 'PET 1 (polietileno)', peso: '~45 gramos', confianza: '98,4 %', valor: 15 };
+
 export default function ScanResultScreen({ navigate }) {
-  const { puntosPorBotella, ultimoCodigo } = useWallet();
+  const { ultimoEscaneo } = useWallet();
+  const e = ultimoEscaneo || POR_DEFECTO;
+
+  const Fila = ({ label, valor, color = colors.ink }) => (
+    <View style={s.fila}>
+      <Text style={s.label}>{label}</Text>
+      <Text style={[s.valor, { color }]}>{valor}</Text>
+    </View>
+  );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.checkCircle}><Text style={styles.checkIcon}>✓</Text></View>
-      <Text style={styles.title}>¡Envase Detectado!</Text>
+    <Screen>
+      <Header title="Resultado del escaneo" onBack={() => navigate('scan')} />
 
-      <View style={styles.infoCard}>
-        <Text style={styles.infoText}>Código: <Text style={styles.bold}>{ultimoCodigo}</Text></Text>
-        <Text style={styles.points}>+{puntosPorBotella} Puntos Ecológicos (${puntosPorBotella} ARS)</Text>
+      <View style={s.ok}>
+        <View style={s.okIcon}><Ionicons name="checkmark" size={36} color={colors.white} /></View>
+        <Text style={s.okTitle}>¡Plástico identificado!</Text>
+        <Text style={s.okTxt}>PET tipo 1 de alta reciclabilidad detectado correctamente.</Text>
       </View>
 
-      <Button variant="primary" title="Depositar en Punto de Entrega" onPress={() => navigate('map')} />
-      <Button variant="mp" title="Canjear en Mercado Pago" onPress={() => navigate('mp_transfer')} />
-      <LinkButton title="Escanear otro envase" onPress={() => navigate('scan')} />
-    </View>
+      <Card style={{ padding: 20 }}>
+        <Text style={s.cardHead}>Detalles del material</Text>
+        <Fila label="Material" valor={e.material} />
+        <View style={s.sep} />
+        <Fila label="Peso estimado" valor={e.peso} />
+        <View style={s.sep} />
+        <Fila label="Confianza de IA" valor={`${e.confianza} seguro`} color={colors.green} />
+      </Card>
+
+      <View style={s.valor2}>
+        <Ionicons name="ribbon-outline" size={34} color={colors.navy} />
+        <View>
+          <Text style={s.vLabel}>Valor estimado del canje</Text>
+          <Text style={s.vMonto}>+ ${e.valor}</Text>
+        </View>
+      </View>
+
+      <Button variant="primary" title="Buscá un Resi-Drop cercano" onPress={() => navigate('map')} />
+      <Button variant="outline" title="Escaneá de nuevo" onPress={() => navigate('scan')} style={{ marginBottom: 16 }} />
+
+      <SettingsSection variant="chips" />
+    </Screen>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 },
-  checkCircle: { width: 70, height: 70, borderRadius: 35, backgroundColor: '#DCFCE7', justifyContent: 'center', alignItems: 'center', marginBottom: 14 },
-  checkIcon: { fontSize: 34, color: colors.green, fontWeight: 'bold' },
-  title: { fontSize: 20, fontWeight: 'bold', color: colors.dark, marginBottom: 14 },
-  infoCard: { width: '100%', backgroundColor: colors.white, padding: 16, borderRadius: 14, borderWidth: 1, borderColor: colors.border, marginBottom: 18 },
-  infoText: { fontSize: 14, color: colors.slate600, marginBottom: 4 },
-  bold: { fontWeight: 'bold', color: colors.dark },
-  points: { fontSize: 16, fontWeight: 'bold', color: colors.green, marginTop: 8 },
+const s = StyleSheet.create({
+  ok: { backgroundColor: colors.mint, borderWidth: 1, borderColor: '#A7F3D0', borderRadius: 24, padding: 22, alignItems: 'center', marginBottom: 14 },
+  okIcon: { width: 66, height: 66, borderRadius: 33, backgroundColor: colors.green, alignItems: 'center', justifyContent: 'center', marginBottom: 12 },
+  okTitle: { fontSize: 22, fontWeight: '800', color: colors.greenDark },
+  okTxt: { fontSize: 15, color: colors.greenDark, textAlign: 'center', marginTop: 6, lineHeight: 22 },
+  cardHead: { fontSize: 16, fontWeight: '800', color: colors.slate, marginBottom: 12 },
+  fila: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  label: { fontSize: 16, color: colors.slate },
+  valor: { fontSize: 16, fontWeight: '800' },
+  sep: { height: 1, backgroundColor: colors.border, marginVertical: 12 },
+  valor2: { flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: colors.blueSoft, borderRadius: 20, padding: 20, marginBottom: 20 },
+  vLabel: { fontSize: 15, color: colors.slate },
+  vMonto: { fontSize: 28, fontWeight: '800', color: colors.navy, marginTop: 2 },
 });

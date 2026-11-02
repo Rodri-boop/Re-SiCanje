@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Alert, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { useWallet } from '../context/WalletContext';
 import Screen from '../components/Screen';
@@ -18,15 +18,26 @@ export default function WalletScreen({ navigate }) {
 
       <View style={s.card}>
         <View style={s.between}>
-          <Text style={s.cLabel}>SALDO EN PESOS ARGENTINOS</Text>
-          <Ionicons name="card-outline" size={26} color={colors.white} />
+          <Text style={s.cLabel}>SALDO EN RECI-POINTS</Text>
+          <View style={s.iconBadge}>
+            <Ionicons name="sparkles" size={18} color={colors.green} />
+          </View>
         </View>
-        <Text style={s.cMonto}>$ {formatARS(balance)} ARS</Text>
-        <Text style={s.cSub}>Saldo disponible en pesos argentinos</Text>
-        <View style={s.botones}>
-          <Button variant="primary" icon="paper-plane" title="Enviar" style={s.btn} onPress={() => Alert.alert('Próximamente', 'El envío entre usuarios todavía no está disponible.')} />
-          <Button variant="green" icon="gift-outline" title="Retirar a CBU/CVU" style={s.btn} onPress={() => navigate('mp_transfer')} />
+
+        <View style={s.montoRow}>
+          <Text style={s.cMonto}>{formatARS(balance)}</Text>
+          <Text style={s.cUnit}>pts</Text>
         </View>
+
+        <Text style={s.cSub}>Puntos acumulados disponibles para canjear en comercios</Text>
+
+        <Button
+          variant="green"
+          icon="storefront-outline"
+          title="Canjear en locales adheridos"
+          style={s.btnCanjear}
+          onPress={() => navigate('stores')}
+        />
       </View>
 
       <Text style={s.section}>Historial de movimientos</Text>
@@ -43,7 +54,7 @@ export default function WalletScreen({ navigate }) {
                 <Text style={s.movDetalle}>{m.detalle}</Text>
               </View>
               <Text style={[s.movMonto, { color: ingreso ? colors.green : colors.ink }]}>
-                {ingreso ? '+' : '-'} ${formatARS(Math.abs(m.monto))}
+                {ingreso ? '+' : '-'} {formatARS(Math.abs(m.monto))} pts
               </Text>
             </View>
             {i < movimientos.length - 1 && <View style={s.sep} />}
@@ -60,11 +71,13 @@ export default function WalletScreen({ navigate }) {
 const s = StyleSheet.create({
   card: { backgroundColor: colors.ink, borderRadius: 28, padding: 22, marginBottom: 22 },
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  cLabel: { fontSize: 13, fontWeight: '700', color: colors.slate },
-  cMonto: { fontSize: 38, fontWeight: '800', color: colors.white, marginTop: 14 },
-  cSub: { fontSize: 14, color: colors.slate, marginTop: 4, marginBottom: 18 },
-  botones: { flexDirection: 'row', gap: 10 },
-  btn: { width: 'auto', flex: 1, minHeight: 46, borderRadius: 14, marginBottom: 0 },
+  iconBadge: { width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(255,255,255,0.12)', alignItems: 'center', justifyContent: 'center' },
+  cLabel: { fontSize: 13, fontWeight: '700', color: colors.slate, letterSpacing: 0.5 },
+  montoRow: { flexDirection: 'row', alignItems: 'baseline', marginTop: 12 },
+  cMonto: { fontSize: 42, fontWeight: '800', color: colors.white },
+  cUnit: { fontSize: 20, fontWeight: '800', color: colors.green, marginLeft: 8 },
+  cSub: { fontSize: 14, color: colors.slate, marginTop: 4, marginBottom: 20 },
+  btnCanjear: { minHeight: 52, borderRadius: 16, marginBottom: 0 },
   section: { fontSize: 20, fontWeight: '800', color: colors.ink, marginBottom: 14 },
   mov: { flexDirection: 'row', alignItems: 'center', gap: 14, paddingVertical: 6 },
   movIcon: { width: 52, height: 52, borderRadius: 26, alignItems: 'center', justifyContent: 'center' },

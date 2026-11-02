@@ -1,8 +1,7 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
+import { parseQRReciclaje, formatearPeso, MOBIUS_MATERIALS } from '../utils/mobius';
 
 const WalletContext = createContext(null);
-
-const VALOR_POR_BOTELLA = 15;
 
 const hora = () => {
   const d = new Date();
@@ -11,23 +10,64 @@ const hora = () => {
 
 export function WalletProvider({ children }) {
   const [balance, setBalance] = useState(2450);
-  const [botellas, setBotellas] = useState(142);
-  const [ultimoEscaneo, setUltimoEscaneo] = useState(null);
+  const [pesoTotal, setPesoTotal] = useState(8.5); // Peso en kg acumulado
+  const [ultimoEscaneo, setUltimoEscaneo] = useState({
+    codigo: 'EJEMPLO-QR-INICIAL',
+    material: MOBIUS_MATERIALS.pet,
+    pesoKg: 0.45,
+    valor: 90,
+    confianza: '100 % (Verificado por QR)',
+  });
+
   const [movimientos, setMovimientos] = useState([
-    { id: '1', titulo: 'Canje en Punto Verde', detalle: 'Hoy, 10:24 • 12 botellas', monto: 180, icono: 'arrow-down-left' },
-    { id: '2', titulo: 'Descuento en café', detalle: 'Ayer, 18:15 • Canjeado', monto: -500, icono: 'shopping-bag' },
-    { id: '3', titulo: 'Canje en Supermercado', detalle: '14/01, 14:02 • 8 botellas', monto: 120, icono: 'arrow-down-left' },
+    { id: '1', titulo: 'Reciclaje PET (0,90 kg)', detalle: 'Hoy, 10:24 • Triángulo Möbius N° 1', monto: 180, icono: 'arrow-down-left' },
+    { id: '2', titulo: 'Café Martínez Sustentable', detalle: 'Ayer, 18:15 • Cupón 20% OFF', monto: -450, icono: 'shopping-bag' },
+    { id: '3', titulo: 'Reciclaje HDPE (0,55 kg)', detalle: '14/01, 14:02 • Triángulo Möbius N° 2', monto: 120, icono: 'arrow-down-left' },
   ]);
 
   const addMovimiento = (m) => setMovimientos((p) => [{ id: Date.now().toString(), ...m }, ...p]);
 
-  // TODO: estos valores (material, peso, confianza) son de relleno hasta conectar el modelo de visión
+  // Escaneo de QR con tipo de material (Möbius) y peso a reciclar
   const registerScan = useCallback((codigo) => {
-    setUltimoEscaneo({ codigo, material: 'PET 1 (polietileno)', peso: '~45 gramos', confianza: '98,4 %', valor: VALOR_POR_BOTELLA });
-    setBalance((p) => p + VALOR_POR_BOTELLA);
-    setBotellas((p) => p + 1);
-    addMovimiento({ titulo: 'Canje por escaneo', detalle: `${hora()} • 1 botella`, monto: VALOR_POR_BOTELLA, icono: 'arrow-down-left' });
+    const escaneo = parseQRReciclaje(codigo);
+
+    setUltimoEscaneo({
+      codigo,
+      material: escaneo.material,
+      pesoKg: escaneo.pesoKg,
+      valor: escaneo.puntos,
+      confianza: '100 % (Verificado por QR)',
+    });
+
+    setPesoTotal((p) => Number((p + escaneo.pesoKg).toFixed(2)));
+    setBalance((p) => p + escaneo.puntos);
+
+    addMovimiento({
+      titulo: `Reciclaje ${escaneo.material.sigla} (${formatearPeso(escaneo.pesoKg)})`,
+      detalle: `${hora()} • Triángulo Möbius N° ${escaneo.material.numero}`,
+      monto: escaneo.puntos,
+      icono: 'arrow-down-left',
+    });
   }, []);
+
+  const canjearPuntos = useCallback(({ local, puntos, beneficio }) => {
+    if (puntos > balance) {
+      return {
+        ok: false,
+        title: 'Reci-Points insuficientes',
+        message: `Necesitás ${puntos} Reci-Points para este beneficio. Tu saldo actual es de ${balance} pts.`
+      };
+    }
+    const cupon = `RECI-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+    setBalance((p) => p - puntos);
+    addMovimiento({
+      titulo: `Canje en ${local}`,
+      detalle: `${hora()} • ${beneficio}`,
+      monto: -puntos,
+      icono: 'shopping-bag',
+    });
+    return { ok: true, cupon };
+  }, [balance]);
 
   const withdraw = useCallback(({ cvu, titular, monto }) => {
     if (!cvu.trim() || !titular.trim()) {
@@ -41,8 +81,11 @@ export function WalletProvider({ children }) {
     return { ok: true, monto: montoNum };
   }, [balance]);
 
+  // botellas como compatibilidad para componentes existentes
+  const botellas = Math.round(pesoTotal / 0.045);
+
   return (
-    <WalletContext.Provider value={{ balance, botellas, ultimoEscaneo, movimientos, registerScan, withdraw }}>
+    <WalletContext.Provider value={{ balance, pesoTotal, botellas, ultimoEscaneo, movimientos, registerScan, canjearPuntos, withdraw }}>
       {children}
     </WalletContext.Provider>
   );

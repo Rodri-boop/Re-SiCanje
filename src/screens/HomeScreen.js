@@ -1,19 +1,16 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useAuth } from '../context/AuthContext';
 import { useWallet } from '../context/WalletContext';
 import Screen from '../components/Screen';
 import Header from '../components/Header';
 import Card from '../components/Card';
 import Badge from '../components/Badge';
-import SettingsSection from '../components/SettingsSection';
 import { formatARS } from '../utils/format';
 import { formatearPeso } from '../utils/mobius';
 import { colors } from '../theme/colors';
 
 export default function HomeScreen({ navigate }) {
-  const { logout } = useAuth();
   const { balance, pesoTotal } = useWallet();
 
   // Impacto ambiental calculado directamente sobre el peso total reciclado (kg)
@@ -22,7 +19,7 @@ export default function HomeScreen({ navigate }) {
 
   return (
     <Screen>
-      <Header title="Recicanje" />
+      <Header title="Recicanje" onProfile={() => navigate('profile')} />
 
       <View style={s.balance}>
         <View style={s.between}>
@@ -80,12 +77,6 @@ export default function HomeScreen({ navigate }) {
           </Text>
         </View>
       </Card>
-
-      <SettingsSection />
-
-      <TouchableOpacity onPress={logout}>
-        <Text style={s.logout}>Cerrar sesión</Text>
-      </TouchableOpacity>
     </Screen>
   );
 }
@@ -112,5 +103,4 @@ const s = StyleSheet.create({
   info: { flexDirection: 'row', gap: 14, alignItems: 'center', padding: 18 },
   infoTitle: { fontSize: 16, fontWeight: '800', color: colors.ink },
   infoTxt: { fontSize: 14, color: colors.slate, marginTop: 4, lineHeight: 20 },
-  logout: { textAlign: 'center', color: colors.danger, fontWeight: '700', marginTop: 8, padding: 8 },
 });

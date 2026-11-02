@@ -7,7 +7,6 @@ import Header from '../components/Header';
 import Card from '../components/Card';
 import Badge from '../components/Badge';
 import Button from '../components/Button';
-import SettingsSection from '../components/SettingsSection';
 import { formatearPeso, MOBIUS_MATERIALS } from '../utils/mobius';
 import { colors } from '../theme/colors';
 
@@ -73,8 +72,6 @@ export default function ScanResultScreen({ navigate }) {
 
       <Button variant="green" title="Ver en mi Billetera" onPress={() => navigate('wallet')} />
       <Button variant="outline" title="Escanear otro material" onPress={() => navigate('scan')} style={{ marginBottom: 16 }} />
-
-      <SettingsSection variant="chips" />
     </Screen>
   );
 }

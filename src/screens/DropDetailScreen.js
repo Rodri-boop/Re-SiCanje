@@ -7,7 +7,6 @@ import Header from '../components/Header';
 import Card from '../components/Card';
 import Badge from '../components/Badge';
 import Button from '../components/Button';
-import SettingsSection from '../components/SettingsSection';
 import { DROPS } from './MapScreen';
 import { colors } from '../theme/colors';
 
@@ -52,8 +51,6 @@ export default function DropDetailScreen({ navigate, params }) {
       </View>
 
       <Button variant="outline" title="Volver al inicio" onPress={() => navigate('home')} style={{ marginBottom: 16 }} />
-
-      <SettingsSection />
     </Screen>
   );
 }

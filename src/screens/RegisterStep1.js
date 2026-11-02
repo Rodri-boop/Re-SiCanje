@@ -32,7 +32,7 @@ export default function RegisterStep1({ go, form, setForm }) {
       <View style={s.top}>
         <View style={{ flex: 1 }}>
           <Text style={s.title}>Creá tu cuenta</Text>
-          <Text style={s.sub}>Reciclá tus botellas y generá valor digital.</Text>
+          <Text style={s.sub}>Reciclá tus plásticos y generá valor digital.</Text>
         </View>
         <Avatar />
       </View>

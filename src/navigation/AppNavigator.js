@@ -13,6 +13,7 @@ import MapScreen from '../screens/MapScreen';
 import DropDetailScreen from '../screens/DropDetailScreen';
 import WalletScreen from '../screens/WalletScreen';
 import MPTransferScreen from '../screens/MPTransferScreen';
+import StoresScreen from '../screens/StoresScreen';
 
 const SCREENS = {
   home: HomeScreen,
@@ -22,10 +23,20 @@ const SCREENS = {
   drop_detail: DropDetailScreen,
   wallet: WalletScreen,
   mp_transfer: MPTransferScreen,
+  stores: StoresScreen,
 };
 
 // Qué pestaña de la barra inferior se ilumina en cada pantalla
-const TAB = { home: 'home', scan: 'scan', scan_result: 'scan', map: 'map', drop_detail: 'map', wallet: 'wallet', mp_transfer: 'wallet' };
+const TAB = {
+  home: 'home',
+  scan: 'scan',
+  scan_result: 'scan',
+  map: 'map',
+  drop_detail: 'map',
+  wallet: 'wallet',
+  mp_transfer: 'wallet',
+  stores: 'wallet',
+};
 
 export default function AppNavigator() {
   const { usuarioActivo, cargando, registroInfo } = useAuth();

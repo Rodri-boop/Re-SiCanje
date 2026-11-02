@@ -9,13 +9,16 @@ import Card from '../components/Card';
 import Badge from '../components/Badge';
 import SettingsSection from '../components/SettingsSection';
 import { formatARS } from '../utils/format';
+import { formatearPeso } from '../utils/mobius';
 import { colors } from '../theme/colors';
 
 export default function HomeScreen({ navigate }) {
   const { logout } = useAuth();
-  const { balance, botellas } = useWallet();
-  const co2 = (botellas * 0.0873).toFixed(1).replace('.', ',');
-  const agua = Math.round(botellas * 0.317);
+  const { balance, pesoTotal } = useWallet();
+
+  // Impacto ambiental calculado directamente sobre el peso total reciclado (kg)
+  const co2 = (pesoTotal * 1.8).toFixed(1).replace('.', ',');
+  const agua = Math.round(pesoTotal * 26);
 
   return (
     <Screen>
@@ -23,31 +26,33 @@ export default function HomeScreen({ navigate }) {
 
       <View style={s.balance}>
         <View style={s.between}>
-          <Text style={s.balLabel}>MI SALDO DISPONIBLE</Text>
+          <Text style={s.balLabel}>TUS RECI-POINTS DISPONIBLES</Text>
           <Badge label="ECO-ACTIVO" variant="green" />
         </View>
         <View style={s.amountRow}>
           <Text style={s.amount}>{formatARS(balance)}</Text>
-          <Text style={s.ars}>ARS</Text>
+          <Text style={s.ars}>PTS</Text>
         </View>
         <View style={s.line} />
         <View style={s.between}>
           <View>
-            <Text style={s.balSmall}>Plásticos canjeados</Text>
-            <Text style={s.balBig}>{botellas} botellas</Text>
+            <Text style={s.balSmall}>Material reciclado</Text>
+            <Text style={s.balBig}>{formatearPeso(pesoTotal)}</Text>
           </View>
           <View style={{ alignItems: 'flex-end' }}>
             <Text style={s.balSmall}>Próximo hito</Text>
-            <Text style={[s.balBig, { color: colors.green }]}>$ 50 de regalo</Text>
+            <Text style={[s.balBig, { color: colors.green }]}>10 kg (+100 pts)</Text>
           </View>
         </View>
       </View>
 
       <TouchableOpacity style={s.scan} activeOpacity={0.9} onPress={() => navigate('scan')}>
-        <View style={s.scanIcon}><Ionicons name="camera-outline" size={26} color={colors.white} /></View>
+        <View style={s.scanIcon}>
+          <Ionicons name="qr-code-outline" size={28} color={colors.white} />
+        </View>
         <View style={{ flex: 1 }}>
-          <Text style={s.scanTitle}>Escaneá un nuevo plástico</Text>
-          <Text style={s.scanSub}>Identificá botellas PET y conocé su valor al instante</Text>
+          <Text style={s.scanTitle}>Escaneá un QR de reciclaje</Text>
+          <Text style={s.scanSub}>Registrá peso y material (PET, HDPE, PVC, LDPE, PP, PS)</Text>
         </View>
         <Ionicons name="chevron-forward" size={22} color={colors.white} />
       </TouchableOpacity>
@@ -67,10 +72,12 @@ export default function HomeScreen({ navigate }) {
       </View>
 
       <Card style={s.info}>
-        <Ionicons name="information-circle-outline" size={30} color={colors.navy} />
+        <Ionicons name="sync-outline" size={30} color={colors.navy} />
         <View style={{ flex: 1 }}>
-          <Text style={s.infoTitle}>¿Cómo canjear tus botellas?</Text>
-          <Text style={s.infoTxt}>Escaneá, depositá en un Resi-Drop y recibí tus acreditaciones en pesos argentinos mediante CBU, CVU o alias.</Text>
+          <Text style={s.infoTitle}>¿Cómo registrar tu reciclaje?</Text>
+          <Text style={s.infoTxt}>
+            Escaneá el código QR en la estación de pesaje o terminal. El sistema registrará el peso y tipo de plástico según la norma de triángulos de Möbius (PET a PS) para acreditar tus Reci-Points.
+          </Text>
         </View>
       </Card>
 
@@ -86,10 +93,10 @@ export default function HomeScreen({ navigate }) {
 const s = StyleSheet.create({
   balance: { backgroundColor: colors.navy, borderRadius: 28, padding: 24, marginBottom: 16, shadowColor: colors.navy, shadowOpacity: 0.25, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 6 },
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  balLabel: { fontSize: 14, fontWeight: '600', color: 'rgba(255,255,255,0.55)', letterSpacing: 0.5 },
+  balLabel: { fontSize: 13, fontWeight: '700', color: 'rgba(255,255,255,0.65)', letterSpacing: 0.5 },
   amountRow: { flexDirection: 'row', alignItems: 'baseline', marginVertical: 14 },
   amount: { fontSize: 46, fontWeight: '800', color: colors.white },
-  ars: { fontSize: 18, fontWeight: '700', color: colors.green, marginLeft: 8 },
+  ars: { fontSize: 18, fontWeight: '800', color: colors.green, marginLeft: 8 },
   line: { height: 1, backgroundColor: 'rgba(255,255,255,0.18)', marginBottom: 16 },
   balSmall: { fontSize: 13, color: 'rgba(255,255,255,0.55)' },
   balBig: { fontSize: 18, fontWeight: '800', color: colors.white, marginTop: 2 },

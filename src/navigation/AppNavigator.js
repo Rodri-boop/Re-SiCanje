@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import BottomNav from '../components/BottomNav';
+import { colors } from '../theme/colors';
 
 import AuthScreen from '../screens/AuthScreen';
 import HomeScreen from '../screens/HomeScreen';
@@ -33,7 +34,7 @@ export default function AppNavigator() {
   if (cargando) {
     return (
       <View style={[styles.container, styles.center]}>
-        <ActivityIndicator size="large" color="#00C06D" />
+        <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
   }
@@ -44,12 +45,20 @@ export default function AppNavigator() {
   return (
     <View style={styles.container}>
       <Screen navigate={setScreen} />
-      {!SCREENS_WITHOUT_NAV.includes(screen) && <BottomNav current={screen} onNavigate={setScreen} />}
+      {!SCREENS_WITHOUT_NAV.includes(screen) && (
+        <BottomNav current={screen} onNavigate={setScreen} />
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  center: { justifyContent: 'center', alignItems: 'center' },
+  container: {
+    flex: 1,
+    backgroundColor: colors.bg,
+  },
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

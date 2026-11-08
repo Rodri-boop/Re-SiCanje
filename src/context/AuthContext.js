@@ -81,12 +81,22 @@ export function AuthProvider({ children }) {
     return fail('Próximamente', 'El inicio con Google todavía no está disponible.');
   }, []);
 
+  const loginDemo = useCallback(() => {
+    setUsuarioActivo({
+      id: 'demo-user-123',
+      email: 'demo@recicanje.com',
+      nombre: 'Federico Eco',
+    });
+    return { ok: true };
+  }, []);
+
   const logout = useCallback(async () => {
     await supabase.auth.signOut();
+    setUsuarioActivo(null);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ usuarioActivo, cargando, register, login, loginWithGoogle, logout }}>
+    <AuthContext.Provider value={{ usuarioActivo, cargando, register, login, loginDemo, loginWithGoogle, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -14,10 +14,13 @@ export function WalletProvider({ children }) {
     { id: '3', texto: '- Retiro enviado a Mercado Pago', monto: '-$1.000 ARS', tipo: 'blue' },
   ]);
 
+  const [ultimoCodigo, setUltimoCodigo] = useState('7791234567890 (PET 500ml)');
+
   const addMovimiento = (mov) =>
     setMovimientos((prev) => [{ id: Date.now().toString(), ...mov }, ...prev]);
 
-  const registerScan = useCallback(() => {
+  const registerScan = useCallback((codigo) => {
+    if (codigo) setUltimoCodigo(codigo);
     setBalance((p) => p + PUNTOS_POR_BOTELLA);
     setRecycledKg((p) => +(p + KG_POR_BOTELLA).toFixed(2));
     addMovimiento({
@@ -48,7 +51,7 @@ export function WalletProvider({ children }) {
 
   return (
     <WalletContext.Provider
-      value={{ balance, recycledKg, movimientos, puntosPorBotella: PUNTOS_POR_BOTELLA, registerScan, withdraw }}
+      value={{ balance, recycledKg, movimientos, puntosPorBotella: PUNTOS_POR_BOTELLA, ultimoCodigo, registerScan, withdraw }}
     >
       {children}
     </WalletContext.Provider>

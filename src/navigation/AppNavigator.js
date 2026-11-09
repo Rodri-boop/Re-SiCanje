@@ -1,55 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { useAuth } from '../context/AuthContext';
-import BottomNav from '../components/BottomNav';
-
 import AuthScreen from '../screens/AuthScreen';
 import HomeScreen from '../screens/HomeScreen';
-import ScanScreen from '../screens/ScanScreen';
-import ScanResultScreen from '../screens/ScanResultScreen';
-import MapScreen from '../screens/MapScreen';
 import WalletScreen from '../screens/WalletScreen';
-import MPTransferScreen from '../screens/MPTransferScreen';
-
-const SCREENS = {
-  home: HomeScreen,
-  scan: ScanScreen,
-  scan_result: ScanResultScreen,
-  map: MapScreen,
-  wallet: WalletScreen,
-  mp_transfer: MPTransferScreen,
-};
-
-const SCREENS_WITHOUT_NAV = ['scan'];
+import MapScreen from '../screens/MapScreen';
+import ScanResultScreen from '../screens/ScanResultScreen';
+import OperatorScreen from '../screens/OperatorScreen';
+import BottomNav from '../components/BottomNav';
 
 export default function AppNavigator() {
   const { usuarioActivo, cargando } = useAuth();
-  const [screen, setScreen] = useState('home');
-
-  useEffect(() => {
-    if (!usuarioActivo) setScreen('home');
-  }, [usuarioActivo]);
+  const [activeTab, setActiveTab] = useState('home');
 
   if (cargando) {
-    return (
-      <View style={[styles.container, styles.center]}>
-        <ActivityIndicator size="large" color="#00C06D" />
-      </View>
-    );
+    return <View style={styles.container} />;
   }
 
-  if (!usuarioActivo) return <AuthScreen />;
+  if (!usuarioActivo) {
+    return <AuthScreen />;
+  }
 
-  const Screen = SCREENS[screen];
+  const renderScreen = () => {
+    switch (activeTab) {
+      case 'home':
+        return <HomeScreen navigate={setActiveTab} />;
+      case 'wallet':
+        return <WalletScreen navigate={setActiveTab} />;
+      case 'map':
+        return <MapScreen navigate={setActiveTab} />;
+      case 'scan':
+        return <ScanResultScreen navigate={setActiveTab} />;
+      case 'operator':
+        return <OperatorScreen navigate={setActiveTab} />;
+      default:
+        return <HomeScreen navigate={setActiveTab} />;
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Screen navigate={setScreen} />
-      {!SCREENS_WITHOUT_NAV.includes(screen) && <BottomNav current={screen} onNavigate={setScreen} />}
+      <View style={styles.content}>
+        {renderScreen()}
+      </View>
+      <BottomNav current={activeTab} onNavigate={setActiveTab} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  center: { justifyContent: 'center', alignItems: 'center' },
+  container: {
+    flex: 1,
+    backgroundColor: '#F8FAFC',
+    position: 'relative',
+  },
+  content: {
+    flex: 1,
+  },
 });

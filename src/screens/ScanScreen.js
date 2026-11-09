@@ -1,111 +1,188 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, Linking, StyleSheet } from 'react-native';
-import { CameraView, useCameraPermissions } from 'expo-camera';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { CameraView, Camera } from 'expo-camera';
 import { useWallet } from '../context/WalletContext';
 import Button from '../components/Button';
 import { colors } from '../theme/colors';
 
-const BARCODE_TYPES = ['ean13', 'ean8', 'upc_a', 'upc_e', 'qr'];
+export default function ScanResultScreen({ navigate }) {
+  const { agregarCreditos } = useWallet();
+  const [hasPermission, setHasPermission] = useState(null);
+  const [scanning, setScanning] = useState(false);
 
-export default function ScanScreen({ navigate }) {
-  const [permission, requestPermission] = useCameraPermissions();
-  const { registerScan } = useWallet();
-  const [torch, setTorch] = useState(false);
-  const yaEscaneado = useRef(false); // evita que la cámara dispare varias veces seguidas
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
 
-  const handleBarcode = ({ data }) => {
-    if (yaEscaneado.current) return;
-    yaEscaneado.current = true;
-    registerScan(data);
-    navigate('scan_result');
+  const handleBarCodeScanned = ({ data }) => {
+    setScanning(false);
+    
+    try {
+      let creditosGanados = 30; 
+      let nombrePunto = 'ReciDrop';
+
+      try {
+        const parsed = JSON.parse(data);
+        if (parsed.creditos) creditosGanados = parseInt(parsed.creditos, 10);
+        if (parsed.punto) nombrePunto = parsed.punto;
+      } catch (e) {
+        creditosGanados = 30; 
+      }
+
+      agregarCreditos(creditosGanados, 0.05, `Validación presencial en ${nombrePunto}`);
+
+      Alert.alert(
+        '¡Re-SiCréditos acreditados!',
+        `El operador del ReciDrop validó tu entrega. Se acreditaron ${creditosGanados} Re-SiCréditos en tu cuenta.`,
+        [{ text: 'Ver Billetera', onPress: () => navigate('wallet') }]
+      );
+    } catch (error) {
+      Alert.alert('Error de Lectura', 'El código QR presentado no es válido para la red de Re-SiCanje.');
+    }
   };
 
-  // 1) Todavía cargando el estado del permiso
-  if (!permission) {
-    return <View style={styles.container} />;
-  }
-
-  // 2) Sin permiso: explicamos y pedimos
-  if (!permission.granted) {
+  if (hasPermission === null) {
     return (
-      <View style={[styles.container, styles.center]}>
-        <Text style={styles.permIcon}>📷</Text>
-        <Text style={styles.permTitle}>Necesitamos acceso a la cámara</Text>
-        <Text style={styles.permText}>
-          Se usa solamente para escanear el código de tus envases reciclables.
-        </Text>
-        {permission.canAskAgain ? (
-          <Button variant="green" title="Permitir cámara" onPress={requestPermission} />
-        ) : (
-          <Button variant="green" title="Abrir ajustes" onPress={() => Linking.openSettings()} />
-        )}
-        <TouchableOpacity onPress={() => navigate('home')}>
-          <Text style={styles.back}>← Volver</Text>
-        </TouchableOpacity>
+      <View style={styles.centerContainer}>
+        <Text style={styles.permissionText}>Solicitando permisos de cámara...</Text>
       </View>
     );
   }
 
-  // 3) Con permiso: cámara en vivo
+  if (hasPermission === false) {
+    return (
+      <View style={styles.centerContainer}>
+        <Text style={styles.permissionText}>No hay acceso a la cámara. Por favor habilítalo en la configuración de tu teléfono.</Text>
+      </View>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <CameraView
-        style={StyleSheet.absoluteFill}
-        facing="back"
-        enableTorch={torch}
-        barcodeScannerSettings={{ barcodeTypes: BARCODE_TYPES }}
-        onBarcodeScanned={handleBarcode}
-      />
-
-      <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => navigate('home')}>
-          <Text style={styles.back}>← Volver</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>Escanear Envase</Text>
-        <TouchableOpacity onPress={() => setTorch((t) => !t)}>
-          <Text style={styles.torch}>{torch ? '🔦 On' : '🔦 Off'}</Text>
-        </TouchableOpacity>
+    <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+      <Text style={styles.title}>Validación en ReciDrop</Text>
+      
+      <View style={styles.sloganCard}>
+        <Text style={styles.sloganText}>
+          Toma una foto de tus envases, presentalo en un ReciDrop y obtene tus Re-SiCréditos en el acto.
+        </Text>
       </View>
 
-      <View style={styles.overlay} pointerEvents="none">
-        <View style={styles.frame} />
-        <Text style={styles.instruction}>Apuntá al código de barras del envase</Text>
-      </View>
-    </View>
+      {scanning ? (
+        <View style={styles.cameraContainer}>
+          <CameraView
+            onBarcodeScanned={scanning ? handleBarCodeScanned : undefined}
+            barcodeScannerSettings={{
+              barcodeTypes: ["qr"],
+            }}
+            style={StyleSheet.absoluteFillObject}
+          />
+          <TouchableOpacity 
+            style={styles.cancelScanBtn} 
+            onPress={() => setScanning(false)}
+          >
+            <Text style={styles.cancelScanText}>Cancelar Escaneo</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.actionSection}>
+          <View style={styles.instructionsBox}>
+            <Text style={styles.instructionsTitle}>Paso final de validación:</Text>
+            <Text style={styles.instructionsText}>
+              Una vez que el operador del ReciDrop pese y verifique tus envases, te mostrará un código QR en su pantalla. Presiona el botón para escanearlo y recibir tus créditos de inmediato.
+            </Text>
+          </View>
+
+          <Button 
+            title="Escanear QR del ReciDrop" 
+            onPress={() => setScanning(true)} 
+          />
+        </View>
+      )}
+
+      <Text style={styles.sectionTitle}>Red de Puntos Habilitados</Text>
+      <TouchableOpacity 
+        style={styles.mapLinkBtn} 
+        onPress={() => navigate('map')}
+        activeOpacity={0.8}
+      >
+        <Text style={styles.mapLinkText}>Buscar ReciDrops cercanos en el mapa →</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.dark },
-  center: { justifyContent: 'center', alignItems: 'center', padding: 24 },
-  topBar: {
-    position: 'absolute', top: 0, left: 0, right: 0, flexDirection: 'row',
-    justifyContent: 'space-between', alignItems: 'center', padding: 16, paddingTop: 30,
-    backgroundColor: 'rgba(15,23,42,0.55)',
+  scroll: { padding: 20, paddingBottom: 110 },
+  centerContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 },
+  permissionText: { fontSize: 14, color: colors.slate600, textAlign: 'center' },
+  title: { fontSize: 24, fontWeight: '900', color: colors.dark, marginBottom: 12 },
+  sloganCard: {
+    backgroundColor: '#ECFDF5',
+    borderWidth: 1,
+    borderColor: '#A7F3D0',
+    borderRadius: 16,
+    padding: 18,
+    marginBottom: 20,
   },
-  back: { color: colors.white, fontSize: 15, fontWeight: 'bold', marginTop: 4 },
-  title: { color: colors.white, fontSize: 16, fontWeight: 'bold' },
-  torch: { color: colors.white, fontSize: 14, fontWeight: 'bold' },
-  overlay: { ...StyleSheet.absoluteFillObject },
-  frame: {
+  sloganText: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#065F46',
+    lineHeight: 22,
+    textAlign: 'center',
+  },
+  actionSection: {
+    marginBottom: 24,
+  },
+  instructionsBox: {
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+  },
+  instructionsTitle: { fontSize: 14, fontWeight: '800', color: colors.dark, marginBottom: 6 },
+  instructionsText: { fontSize: 12, color: colors.slate500, lineHeight: 18, fontWeight: '500' },
+  cameraContainer: {
+    width: '100%',
+    height: 380,
+    borderRadius: 16,
+    overflow: 'hidden',
+    marginBottom: 20,
+    backgroundColor: colors.dark,
+    position: 'relative',
+  },
+  cancelScanBtn: {
     position: 'absolute',
-    bottom: '50%',
-    top: '50%',
-    left: '50%',
-    width: 280,
-    height: 160,
-    marginTop: 280,
-    marginLeft: -140,
-    borderWidth: 3,
-    borderColor: colors.green,
-    borderRadius: 20,
+    bottom: 20,
+    alignSelf: 'center',
+    backgroundColor: '#EF4444',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 12,
   },
-  instruction: {
-    position: 'absolute', top: '50%', marginTop: 440, alignSelf: 'center',
-    color: colors.white, fontSize: 13, paddingHorizontal: 14, paddingVertical: 6,
-    backgroundColor: 'rgba(15,23,42,0.6)', borderRadius: 10, overflow: 'hidden',
+  cancelScanText: { color: colors.white, fontSize: 13, fontWeight: '800' },
+  sectionTitle: { 
+    fontSize: 16, 
+    fontWeight: '800', 
+    color: colors.slate700, 
+    marginBottom: 12 
   },
-  permIcon: { fontSize: 48, marginBottom: 12 },
-  permTitle: { color: colors.white, fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
-  permText: { color: colors.border, fontSize: 13, textAlign: 'center', marginBottom: 20 },
+  mapLinkBtn: {
+    backgroundColor: '#EFF6FF',
+    borderWidth: 1,
+    borderColor: '#BFDBFE',
+    padding: 16,
+    borderRadius: 16,
+    alignItems: 'center',
+  },
+  mapLinkText: {
+    color: '#1E40AF',
+    fontSize: 13,
+    fontWeight: '800',
+  },
 });

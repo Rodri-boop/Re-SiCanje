@@ -1,0 +1,27 @@
+import React from 'react';
+import { SafeAreaView, StyleSheet, StatusBar } from 'react-native';
+import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
+import { AuthProvider } from './src/context/AuthContext';
+import { WalletProvider } from './src/context/WalletContext';
+import AppNavigator from './src/navigation/AppNavigator';
+import { colors } from './src/theme/colors';
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <WalletProvider>
+        <SafeAreaView style={styles.safeArea}>
+          <ExpoStatusBar style="light" backgroundColor={colors.bg} />
+          <AppNavigator />
+        </SafeAreaView>
+      </WalletProvider>
+    </AuthProvider>
+  );
+}
+
+const styles = StyleSheet.create({
+  safeArea: { 
+    flex: 1, 
+    backgroundColor: colors.bg 
+  },
+});

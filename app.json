@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "Re-SiCanje.App",
+    "slug": "Re-SiCanje.App",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "ReciclaP necesita acceso a la cámara para escanear tus envases y códigos."
+        }
+      ],
+      "expo-status-bar",
+      "expo-image"
+    ]
+  }
+}

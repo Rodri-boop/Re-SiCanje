@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen';
+import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import RegisterStep1 from '../screens/RegisterStep1';
 import RegisterStep2 from '../screens/RegisterStep2';
 
@@ -12,6 +13,7 @@ export default function AuthNavigator() {
   const props = { go: setPaso, form, setForm };
 
   if (paso === 'login') return <LoginScreen {...props} />;
+  if (paso === 'forgot') return <ForgotPasswordScreen {...props} />;
   if (paso === 'reg1') return <RegisterStep1 {...props} />;
   if (paso === 'reg2') return <RegisterStep2 {...props} />;
   return <WelcomeScreen {...props} />;

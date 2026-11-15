@@ -5,7 +5,6 @@ import { useWallet } from '../context/WalletContext';
 import Screen from '../components/Screen';
 import Header from '../components/Header';
 import Button from '../components/Button';
-import SettingsSection from '../components/SettingsSection';
 import { formatARS } from '../utils/format';
 import { colors } from '../theme/colors';
 
@@ -63,7 +62,6 @@ export default function WalletScreen({ navigate }) {
       })}
 
       <View style={{ height: 16 }} />
-      <SettingsSection variant="check" />
     </Screen>
   );
 }

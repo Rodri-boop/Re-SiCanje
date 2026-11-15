@@ -7,7 +7,6 @@ import { Avatar } from '../components/Header';
 import StepDots from '../components/StepDots';
 import Card from '../components/Card';
 import Button from '../components/Button';
-import SettingsSection from '../components/SettingsSection';
 import { colors } from '../theme/colors';
 
 // OJO: este bono es solo visual. Para acreditarlo de verdad hay que hacerlo en el servidor.
@@ -64,8 +63,6 @@ export default function RegisterSuccess() {
           <Text style={s.pasoTxt}>Escaneá una botella PET, identificála y acercate al Resi-Drop más cercano.</Text>
         </View>
       </Card>
-
-      <SettingsSection title="AJUSTES DE REGIÓN E IDIOMA" tone="mint" />
 
       <Button variant="green" title={needsConfirmation ? 'Ir a iniciar sesión' : 'Comenzá a reciclar'} onPress={finalizarRegistro} />
     </Screen>

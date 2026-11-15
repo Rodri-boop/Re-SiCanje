@@ -8,7 +8,6 @@ import Header from '../components/Header';
 import Card from '../components/Card';
 import Badge from '../components/Badge';
 import Button from '../components/Button';
-import SettingsSection from '../components/SettingsSection';
 import { formatARS } from '../utils/format';
 import { colors } from '../theme/colors';
 
@@ -253,7 +252,6 @@ export default function StoresScreen({ navigate }) {
       )}
 
       <View style={{ height: 16 }} />
-      <SettingsSection variant="check" />
 
       {/* Modal de Cupón Canjeado */}
       <Modal visible={!!cuponGenerado} transparent animationType="fade">

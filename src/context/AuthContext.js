@@ -77,12 +77,19 @@ export function AuthProvider({ children }) {
     return fail('Próximamente', 'El inicio con Google todavía no está disponible.');
   }, []);
 
+  const resetPassword = useCallback(async (email) => {
+    if (!email?.trim()) return fail('Dato faltante', 'Ingresá tu correo electrónico.');
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase());
+    if (error) return fail('Error', traducirError(error));
+    return { ok: true };
+  }, []);
+
   const logout = useCallback(async () => {
     await supabase.auth.signOut();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ usuarioActivo, cargando, registroInfo, register, login, loginWithGoogle, logout, finalizarRegistro }}>
+    <AuthContext.Provider value={{ usuarioActivo, cargando, registroInfo, register, login, loginWithGoogle, logout, resetPassword, finalizarRegistro }}>
       {children}
     </AuthContext.Provider>
   );

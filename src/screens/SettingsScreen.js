@@ -6,11 +6,11 @@ import { useSettings } from '../context/SettingsContext';
 import Screen from '../components/Screen';
 import Header from '../components/Header';
 import Card from '../components/Card';
-import Button from '../components/Button';
 import Badge from '../components/Badge';
 import { colors } from '../theme/colors';
 
 export default function SettingsScreen({ navigate }) {
+  const { usuarioActivo, resetPassword } = useAuth();
   const { region, idioma, setIdioma, REGIONES, IDIOMAS } = useSettings();
   const reg = REGIONES.find((r) => r.id === region);
 
@@ -50,7 +50,14 @@ export default function SettingsScreen({ navigate }) {
       <Card>
         <TouchableOpacity
           style={s.menuRow}
-          onPress={() => Alert.alert('Próximamente', 'Esta función estará disponible en una próxima actualización.')}
+          onPress={async () => {
+            const res = await resetPassword(usuarioActivo?.email);
+            if (res.ok) {
+              Alert.alert('Enlace enviado', `Te enviamos un correo a ${usuarioActivo?.email} para cambiar tu contraseña. Revisá tu bandeja de entrada.`);
+            } else {
+              Alert.alert(res.title, res.message);
+            }
+          }}
           activeOpacity={0.7}
         >
           <View style={s.menuIcon}>
